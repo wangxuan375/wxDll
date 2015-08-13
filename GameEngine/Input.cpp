@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 // Desc: 构造函数
 //-----------------------------------------------------------------------------
-MyInputClass::MyInputClass()
+GameEngine::MyInputClass::MyInputClass()
 {
 	m_pDirectInput = NULL;
 	m_KeyboardDevice = NULL;
@@ -18,7 +18,7 @@ MyInputClass::MyInputClass()
 // Name：MyInputClass::Init(）
 // Desc: 初始化DirectInput键盘及鼠标输入设备
 //-----------------------------------------------------------------------------
-HRESULT MyInputClass::Init( HWND hWnd,HINSTANCE hInstance,DWORD keyboardCoopFlags, DWORD mouseCoopFlags )
+HRESULT GameEngine::MyInputClass::Init(HWND hWnd, HINSTANCE hInstance, DWORD keyboardCoopFlags, DWORD mouseCoopFlags)
 {
 	HRESULT hr;
 	//初始化一个IDirectInput8接口对象
@@ -47,7 +47,7 @@ HRESULT MyInputClass::Init( HWND hWnd,HINSTANCE hInstance,DWORD keyboardCoopFlag
 // Name：MyInputClass::GetInput()
 // Desc: 用于获取输入信息的函数
 //-----------------------------------------------------------------------------
-void MyInputClass::GetInput()
+void GameEngine::MyInputClass::GetInput()
 {
 	HRESULT hr = m_KeyboardDevice->GetDeviceState(sizeof(m_keyBuffer), (void**)&m_keyBuffer); 
 	//获取键盘输入消息
@@ -70,7 +70,7 @@ void MyInputClass::GetInput()
 // Name：MyInputClass::IsKeyDown()
 // Desc: 判断键盘上某个键是否按下
 //-----------------------------------------------------------------------------
-bool MyInputClass::IsKeyDown(int iKey)
+bool GameEngine::MyInputClass::IsKeyDown(int iKey)
 {
 	if(m_keyBuffer[iKey] & 0x80)
 		return true;
@@ -83,7 +83,7 @@ bool MyInputClass::IsKeyDown(int iKey)
 // Name：MyInputClass::IsMouseButtonDown()
 // Desc: 判断鼠标上某键是否按下
 //-----------------------------------------------------------------------------
-bool MyInputClass::IsMouseButtonDown(int button)
+bool GameEngine::MyInputClass::IsMouseButtonDown(int button)
 {
 	return (m_MouseState.rgbButtons[button] & 0x80) != 0;
 }
@@ -92,7 +92,7 @@ bool MyInputClass::IsMouseButtonDown(int button)
 // Name：MyInputClass::MouseDX
 // Desc: 返回鼠标指针的X轴坐标值
 //-----------------------------------------------------------------------------
-float MyInputClass::MouseDX()
+float GameEngine::MyInputClass::MouseDX()
 {
 	return (float)m_MouseState.lX;
 }
@@ -101,7 +101,7 @@ float MyInputClass::MouseDX()
 // Name：MyInputClass::MouseDY
 // Desc: 返回鼠标指针的Y轴坐标值
 //-----------------------------------------------------------------------------
-float MyInputClass::MouseDY()
+float GameEngine::MyInputClass::MouseDY()
 {
 	return (float)m_MouseState.lY;
 }
@@ -110,7 +110,7 @@ float MyInputClass::MouseDY()
 // Name：MyInputClass::MouseDZ
 // Desc: 返回鼠标指针的Z轴坐标值（滚轮）
 //-----------------------------------------------------------------------------
-float MyInputClass::MouseDZ()
+float GameEngine::MyInputClass::MouseDZ()
 {
 	return (float)m_MouseState.lZ;
 }
@@ -121,7 +121,7 @@ float MyInputClass::MouseDZ()
 //-----------------------------------------------------------------------------
 // Desc: 析构函数
 //-----------------------------------------------------------------------------
-MyInputClass::~MyInputClass(void)
+GameEngine::MyInputClass::~MyInputClass(void)
 {
 	if(m_KeyboardDevice != NULL)
 		m_KeyboardDevice->Unacquire();

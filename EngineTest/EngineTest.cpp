@@ -4,7 +4,11 @@
 #include "stdafx.h"
 #include "GameEngine.h"
 
-typedef bool(*pD3DInitFun)(HINSTANCE hinstance, int width, int height, bool windowed, D3DDEVTYPE devicetype, IDirect3DDevice9** device, MyInputClass** pInput);
+#ifdef _DEBUG
+#pragma comment(lib,"GameEngine.lib") 
+//#else
+//#pragma comment(lib,"..//Release//GameEngine.lib") 
+#endif
 
 //INT WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 int _tmain(int argc, _TCHAR* argv[])
@@ -13,7 +17,7 @@ int _tmain(int argc, _TCHAR* argv[])
 #ifdef _DEBUG
 	g_hEngine = LoadLibraryA("..//Debug//GameEngine.dll");
 #else
-	g_hEngine = LoadLibraryA("..//Release/GameEngine.dll");
+	g_hEngine = LoadLibraryA("..//Release//GameEngine.dll");
 #endif
 	if (!g_hEngine)
 	{
@@ -21,14 +25,17 @@ int _tmain(int argc, _TCHAR* argv[])
 		getchar();
 		return 1;
 	}
-	pD3DInitFun g_pfnD3DInit = (pD3DInitFun)GetProcAddress(g_hEngine, "D3DInit");
-	if (!g_pfnD3DInit)
-	{
-		printf("Cannot Get Function GameEngine::D3DInit");
-		getchar();
-		return 1;
-	}
-	//IDirect3DDevice9 *g_pDevice = NULL;
+	//pD3DInitFun g_pfnD3DInit = (pD3DInitFun)GetProcAddress(g_hEngine, "D3DInit");
+	//if (!g_pfnD3DInit)
+	//{
+	//	printf("Cannot Get Function GameEngine::D3DInit");
+	//	getchar();
+	//	return 1;
+	//}
+	HINSTANCE hInst = NULL;
+	IDirect3DDevice9 *g_pDevice = NULL;
+	GameEngine::MyInputClass* pInput = NULL;
+	GameEngine::D3DInit(hInst, 800, 600, 1, D3DDEVTYPE_HAL, &g_pDevice, &pInput);
 	//g_pfnD3DInit(hInst, 800, 600, 1, D3DDEVTYPE_HAL, &g_pDevice, NULL);
 	getchar();
 	return 0;
